@@ -24,18 +24,19 @@ var Engine = (function(global) {
     };
 
     function startMenu() {
-        /*if (menu.enterPressed == false) {
-            menu.drawMenu();
-            win.requestAnimationFrame(startMenu);
-        }
-        if (menu.enterPressed) {
+
+        if (menu.gameStart == true) {
             win.cancelAnimationFrame(startMenu);
             ctx.clearRect(0, 0, 506, 301);
             player.reset();
             game();
-        }*/
-        menu.drawMenu();
-        win.requestAnimationFrame(startMenu);
+        }
+
+        else {
+            menu.drawMenu();
+            win.requestAnimationFrame(startMenu);
+        }
+        
     };
 
     function init() {

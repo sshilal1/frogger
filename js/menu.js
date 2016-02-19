@@ -1,5 +1,29 @@
 
-// Opens the frogger menu
+var keyControls = {
+    "keys": [
+        "up" : {
+            "img" : "images/upArrow",
+            "control" : "Up"
+        },
+        "down" : {
+            "img" : "images/downArrow",
+            "control" : "Down"
+        },
+        "left" : {
+            "img" : "images/leftArrow",
+            "control" : "Left"
+        },
+        "right" : {
+            "img" : "images/rightArrow",
+            "control" : "Right"
+        },
+        "menu" : {
+            "img" : "images/enterKey",
+            "control" : "Menu"
+        }
+    ]
+}
+
 var Menu = function () {
     this.resetMenu();
     this.gameStart = false;
@@ -25,7 +49,7 @@ Menu.prototype.drawMenu = function() {
     }
     ctx.font = "12px Comic Sans";
     ctx.fillText("selectedOption: " + this.selectedOption,440,20);
-    ctx.fillText("enterPressed: " + this.enterPressed,440,40);
+    ctx.fillText("gameStart: " + this.gameStart,440,40);
     ctx.fillText("controlMenu: " + this.controlMenu,440,60);
     ctx.fillText("infoMenu: " + this.infoMenu,440,80);
 };
@@ -70,11 +94,21 @@ Menu.prototype.drawMain = function() {
 };
 
 Menu.prototype.drawControls = function() {
-    // here i will draw the controls menu
+    
     ctx.clearRect(0, 0, 506, 301);
+    // Here I will draw the controls menu
+    ctx.strokeStyle = "green";
+    ctx.strokeRect(0, 0, 505, 300);
+
+    ctx.font = "32px Comic Sans";
+    ctx.textAlign="center";
+    ctx.fillText("Controls",252,50);
+
     ctx.font = "20px Comic Sans";
     ctx.textAlign="center";
-    ctx.fillText("Controls",252,250);
+    for (key in keyControls) {
+        ctx.fillText(key.img);
+    }
 };
 
 Menu.prototype.drawInfo = function() {
@@ -114,7 +148,7 @@ Menu.prototype.handleInput = function(key) {
             this.infoMenu = false;
             this.controlMenu = true;
         }
-        if (this.selectedOption == 3) {
+        else if (this.selectedOption == 3) {
             this.controlMenu = false;
             this.infoMenu = true;
         }
