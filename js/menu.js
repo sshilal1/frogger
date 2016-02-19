@@ -1,12 +1,36 @@
 
 // Opens the frogger menu
 var Menu = function () {
+    this.resetMenu();
+    this.gameStart = false;
+};
+
+Menu.prototype.resetMenu = function() {
     this.selectedOption = 1;
     this.enterPressed = false;
+    this.controlMenu = false;
+    this.infoMenu = false;
 }
-//
 
 Menu.prototype.drawMenu = function() {
+
+    if (this.controlMenu) {
+        this.drawControls();
+    }
+    else if (this.infoMenu) {
+        this.drawInfo();
+    }    
+    else {
+        this.drawMain();
+    }
+    ctx.font = "12px Comic Sans";
+    ctx.fillText("selectedOption: " + this.selectedOption,440,20);
+    ctx.fillText("enterPressed: " + this.enterPressed,440,40);
+    ctx.fillText("controlMenu: " + this.controlMenu,440,60);
+    ctx.fillText("infoMenu: " + this.infoMenu,440,80);
+};
+
+Menu.prototype.drawMain = function() {
 
     ctx.clearRect(0, 0, 506, 301);
     // Main Menu
@@ -43,7 +67,7 @@ Menu.prototype.drawMenu = function() {
 
     ctx.font = "14px Comic Sans";
     ctx.fillText("By: Stephen Shilale",440,295);
-}
+};
 
 Menu.prototype.drawControls = function() {
     // here i will draw the controls menu
@@ -51,7 +75,7 @@ Menu.prototype.drawControls = function() {
     ctx.font = "20px Comic Sans";
     ctx.textAlign="center";
     ctx.fillText("Controls",252,250);
-}
+};
 
 Menu.prototype.drawInfo = function() {
     // here I will draw the development information
@@ -59,41 +83,54 @@ Menu.prototype.drawInfo = function() {
     ctx.font = "20px Comic Sans";
     ctx.textAlign="center";
     ctx.fillText("Info",252,250);
-}
+};
 
 // /*
 Menu.prototype.handleInput = function(key) {
     var emptry = 0;
 
     if (key === 'up') {
-        if (!(this.selectedOption == 1)) {
-            this.selectedOption -= 1;
+        if (!(this.selectedOption == 1)) { // if start isnt selected
+            if (!((this.controlMenu) || (this.infoMenu))) {
+                this.selectedOption -= 1;
+            }
         }
         else {
             this.selectedOption = this.selectedOption;
-        }
-    } else if (key === 'down') {
-        if (!(this.selectedOption == 3)) {
-            this.selectedOption += 1;
-        }
-        else {
-            this.selectedOption = this.selectedOption;
-        }
-    } else if (key == 'enter') {
-        this.enterPressed = true;
-    } /*else if (key == 'backspace') {
-        if (this.selectedOption == 1) { // if start is selected, do nothing
-            this.selectedOption = this.selectedOption;
-        } else if ((this.selectedOption == 2) || (this.selectedOption == 3)) { // if in controls or info menu, reset menu
-            this.drawMenu();
         }
     }
-*/}
+    else if (key === 'down') {
+        if (!(this.selectedOption == 3)) {
+            if (!((this.controlMenu) || (this.infoMenu))) {
+                this.selectedOption += 1;
+            }      
+        }
+        else {
+            this.selectedOption = this.selectedOption;
+        }
+    } 
+    else if (key == 'enter') {
+        if (this.selectedOption == 2) {
+            this.infoMenu = false;
+            this.controlMenu = true;
+        }
+        if (this.selectedOption == 3) {
+            this.controlMenu = false;
+            this.infoMenu = true;
+        }
+        else {
+            this.gameStart = true;
+        }
+    } 
+    else if (key == 'backspace') {
+        this.resetMenu();
+    }
+};
 // */
 document.addEventListener('keydown', function(e) {
     var allowedKeys = {
         13: 'enter',
-        //8: 'backspace',
+        8: 'backspace',
         38: 'up',
         40: 'down'
     };
