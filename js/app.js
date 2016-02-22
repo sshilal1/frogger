@@ -106,22 +106,19 @@ Player.prototype.handleInput = function(key) {
     }
 };
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keydown', function(e) {
-    var allowedKeys = {
-        37: 'left',
-        38: 'up',
-        39: 'right',
-        40: 'down'
-    };
+/*
+var allEnemies = [];
+for (enemy in engine.levelOfDifficulty)
+{
+    var enemy = new Enemy();
+    allEnemies.push(enemy)
+}
+*/
+var player = new Player();
 
-    player.handleInput(allowedKeys[e.keyCode]);
-});
 
 var enemy1 = new Enemy();
 var enemy2 = new Enemy();
 var enemy3 = new Enemy();
 var allEnemies = [enemy1, enemy2, enemy3];
 
-var player = new Player();

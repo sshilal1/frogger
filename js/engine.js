@@ -4,11 +4,17 @@ var Engine = (function(global) {
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
         patterns = {},
-        lastTime;
+        lastTime,
+        levelOfDifficulty = 5;
 
     canvas.width = 505;
     canvas.height = 707;
     doc.body.appendChild(canvas);
+
+    function selectDifficulty() {
+        levelOfDifficulty = 5;
+        game();
+    };
 
     function game() {
         var now = Date.now(),
@@ -23,18 +29,18 @@ var Engine = (function(global) {
         win.requestAnimationFrame(game);
     };
 
-    function startMenu() {
+    function main() {
 
         if (menu.gameStart == true) {
-            win.cancelAnimationFrame(startMenu);
+            win.cancelAnimationFrame(main);
             ctx.clearRect(0, 0, 506, 301);
             player.reset();
-            game();
+            selectDifficulty();
         }
 
         else {
             menu.drawMenu();
-            win.requestAnimationFrame(startMenu);
+            win.requestAnimationFrame(main);
         }
         
     };
@@ -42,7 +48,7 @@ var Engine = (function(global) {
     function init() {
         reset();
         lastTime = Date.now();
-        startMenu();
+        main();
     };
 
     function update(dt) {
@@ -109,10 +115,17 @@ var Engine = (function(global) {
     var allowedKeys = {
         13: 'enter',
         8: 'backspace',
+        37: 'left',
         38: 'up',
+        39: 'right',
         40: 'down'
     };
+
     menu.handleInput(allowedKeys[e.keyCode]);
+
+    if (menu.gameStart) {
+        player.handleInput(allowedKeys[e.keyCode]);
+    }
     });
 
 })(this);

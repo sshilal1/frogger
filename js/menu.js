@@ -1,29 +1,38 @@
-/*
 var keyControls = {
     "keys": [
-        "up" : {
-            "img" : "images/upArrow",
-            "control" : "Up"
+        {
+            "img": "images/upArrow.png",
+            "control": "Up",
+            "width": 40
         },
-        "down" : {
-            "img" : "images/downArrow",
-            "control" : "Down"
+        {
+            "img": "images/downArrow.png",
+            "control": "Down",
+            "width": 40
         },
-        "left" : {
-            "img" : "images/leftArrow",
-            "control" : "Left"
+        {
+            "img": "images/leftArrow.png",
+            "control": "Left",
+            "width": 40
         },
-        "right" : {
-            "img" : "images/rightArrow",
-            "control" : "Right"
+        {
+            "img": "images/rightArrow.png",
+            "control": "Right",
+            "width": 40
         },
-        "menu" : {
-            "img" : "images/enterKey",
-            "control" : "Menu"
+        {
+            "img": "images/enterKey.png",
+            "control": "Select",
+            "width": 80
+        },
+        {
+            "img": "images/backKey.png",
+            "control": "Main Menu",
+            "width": 80
         }
     ]
-}
-*/
+};
+
 
 var Menu = function () {
     this.resetMenu();
@@ -53,6 +62,7 @@ Menu.prototype.drawMenu = function() {
     ctx.fillText("gameStart: " + this.gameStart,440,40);
     ctx.fillText("controlMenu: " + this.controlMenu,440,60);
     ctx.fillText("infoMenu: " + this.infoMenu,440,80);
+
 };
 
 Menu.prototype.drawMain = function() {
@@ -105,8 +115,21 @@ Menu.prototype.drawControls = function() {
     ctx.textAlign="center";
     ctx.fillText("Controls",252,50);
 
-    ctx.font = "20px Comic Sans";
-    ctx.textAlign="center";
+    var yPos = 40;
+    var xPos = 150;
+    for (key in keyControls.keys) {
+        yPos += 50;
+        if (yPos >= 260) {
+            xPos = 350;
+            yPos = 90;
+        }
+        var image = new Image();
+        image.src = keyControls.keys[key].img;
+        ctx.drawImage(image,xPos,yPos,keyControls.keys[key].width,40)
+        ctx.font = "14px Comic Sans";
+        ctx.textAlign="right";
+        ctx.fillText(keyControls.keys[key].control,xPos-25,yPos+20);
+    }
 };
 
 Menu.prototype.drawInfo = function() {
@@ -119,8 +142,6 @@ Menu.prototype.drawInfo = function() {
 
 // /*
 Menu.prototype.handleInput = function(key) {
-    var emptry = 0;
-
     if (key === 'up') {
         if (!(this.selectedOption == 1)) { // if start isnt selected
             if (!((this.controlMenu) || (this.infoMenu))) {
