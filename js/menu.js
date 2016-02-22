@@ -1,4 +1,4 @@
-
+/*
 var keyControls = {
     "keys": [
         "up" : {
@@ -23,6 +23,7 @@ var keyControls = {
         }
     ]
 }
+*/
 
 var Menu = function () {
     this.resetMenu();
@@ -106,9 +107,6 @@ Menu.prototype.drawControls = function() {
 
     ctx.font = "20px Comic Sans";
     ctx.textAlign="center";
-    for (key in keyControls) {
-        ctx.fillText(key.img);
-    }
 };
 
 Menu.prototype.drawInfo = function() {
@@ -160,16 +158,5 @@ Menu.prototype.handleInput = function(key) {
         this.resetMenu();
     }
 };
-// */
-document.addEventListener('keydown', function(e) {
-    var allowedKeys = {
-        13: 'enter',
-        8: 'backspace',
-        38: 'up',
-        40: 'down'
-    };
-
-    menu.handleInput(allowedKeys[e.keyCode]);
-});
 
 var menu = new Menu();

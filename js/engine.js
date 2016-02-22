@@ -76,9 +76,9 @@ var Engine = (function(global) {
         }
 
         // Draw the scoreboard 
-        ctx.clearRect(300, 590, 200, 50);
+        ctx.clearRect(300, 0, 200, 50);
         ctx.font = "20px Georgia";
-        ctx.fillText("Score: " + player.playerScore, 420, 610);
+        ctx.fillText("Score: " + player.playerScore, 420, 20);
 
         renderEntities();
     };
@@ -104,4 +104,15 @@ var Engine = (function(global) {
     Resources.onReady(init);
 
     global.ctx = ctx;
+
+    document.addEventListener('keydown', function(e) {
+    var allowedKeys = {
+        13: 'enter',
+        8: 'backspace',
+        38: 'up',
+        40: 'down'
+    };
+    menu.handleInput(allowedKeys[e.keyCode]);
+    });
+
 })(this);
