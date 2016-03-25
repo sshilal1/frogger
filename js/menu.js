@@ -57,12 +57,6 @@ Menu.prototype.drawMenu = function() {
     else {
         this.drawMain();
     }
-    ctx.font = "12px Comic Sans";
-    ctx.fillText("selectedOption: " + this.selectedOption,440,20);
-    ctx.fillText("gameStart: " + this.gameStart,440,40);
-    ctx.fillText("controlMenu: " + this.controlMenu,440,60);
-    ctx.fillText("infoMenu: " + this.infoMenu,440,80);
-
 };
 
 Menu.prototype.drawMain = function() {
@@ -135,9 +129,18 @@ Menu.prototype.drawControls = function() {
 Menu.prototype.drawInfo = function() {
     // here I will draw the development information
     ctx.clearRect(0, 0, 506, 301);
+    ctx.strokeStyle = "red";
+    ctx.strokeRect(0, 0, 505, 300);
+
     ctx.font = "20px Comic Sans";
+    ctx.strokeStyle = "black";
     ctx.textAlign="center";
-    ctx.fillText("Info",252,250);
+    ctx.fillText("Developed By: Stephen Shilale",252,80);
+    ctx.fillText("2016",252,120);
+    ctx.font = "16px Comic Sans";
+    ctx.fillText("Made For",252,160);
+    ctx.font = "20px Comic Sans";
+    ctx.fillText("Udacity: FrontEnd Web Development Course",252,200);
 };
 
 // /*
