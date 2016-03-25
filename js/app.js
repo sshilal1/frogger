@@ -37,9 +37,6 @@ Enemy.prototype.getRandomSpeed = function() {
     return Math.floor(Math.random() * (maxSpeed - minSpeed)) + minSpeed;
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
 // Player initialization
 var Player = function() {
     this.xRange = [-2, 402];
@@ -106,14 +103,6 @@ Player.prototype.handleInput = function(key) {
     }
 };
 
-/*
-var allEnemies = [];
-for (enemy in engine.levelOfDifficulty)
-{
-    var enemy = new Enemy();
-    allEnemies.push(enemy)
-}
-*/
 var player = new Player();
 
 
