@@ -1,3 +1,4 @@
+'use strict';
 // Enemies our player must avoid
 var Enemy = function() {
     this.xRange = [-150, 600];
@@ -60,12 +61,12 @@ Player.prototype.update = function() {
             // is the bug on the same row as the player?
             if (enemy.y == self.y) {
                 // is the bug on the player?
-                if (enemy.x >= player.x - 30 && enemy.x <= player.x + 30) {                   
+                if (enemy.x >= this.x - 30 && enemy.x <= this.x + 30) {                   
                     self.reset();
                     self.losePoint();
                 }
             }
-        });
+        }.bind(this));
     }
 };
 
