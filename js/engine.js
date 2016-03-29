@@ -4,11 +4,17 @@ var Engine = (function(global) {
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
         patterns = {},
-        lastTime;
+        lastTime,
+        levelOfDifficulty = 5;
 
     canvas.width = 505;
     canvas.height = 707;
     doc.body.appendChild(canvas);
+
+    function selectDifficulty() {
+        levelOfDifficulty = 5;
+        game();
+    };
 
     function game() {
         var now = Date.now(),
@@ -23,23 +29,26 @@ var Engine = (function(global) {
         win.requestAnimationFrame(game);
     };
 
-    function startMenu() {
-        if (menu.enterPressed == false) {
-            menu.drawMenu();
-            win.requestAnimationFrame(startMenu);
-        }
-        if (menu.enterPressed == true) {
-            win.cancelAnimationFrame(startMenu);
+    function main() {
+
+        if (menu.gameStart == true) {
+            win.cancelAnimationFrame(main);
             ctx.clearRect(0, 0, 506, 301);
             player.reset();
-            game();
-        }     
+            selectDifficulty();
+        }
+
+        else {
+            menu.drawMenu();
+            win.requestAnimationFrame(main);
+        }
+        
     };
 
     function init() {
         reset();
         lastTime = Date.now();
-        startMenu();
+        main();
     };
 
     function update(dt) {
@@ -73,9 +82,9 @@ var Engine = (function(global) {
         }
 
         // Draw the scoreboard 
-        ctx.clearRect(300, 590, 200, 50);
+        ctx.clearRect(300, 0, 200, 50);
         ctx.font = "20px Georgia";
-        ctx.fillText("Score: " + player.playerScore, 420, 610);
+        ctx.fillText("Score: " + player.playerScore, 420, 20);
 
         renderEntities();
     };
@@ -101,4 +110,22 @@ var Engine = (function(global) {
     Resources.onReady(init);
 
     global.ctx = ctx;
+
+    document.addEventListener('keydown', function(e) {
+    var allowedKeys = {
+        13: 'enter',
+        8: 'backspace',
+        37: 'left',
+        38: 'up',
+        39: 'right',
+        40: 'down'
+    };
+
+    menu.handleInput(allowedKeys[e.keyCode]);
+
+    if (menu.gameStart) {
+        player.handleInput(allowedKeys[e.keyCode]);
+    }
+    });
+
 })(this);

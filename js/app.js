@@ -1,3 +1,4 @@
+'use strict';
 // Enemies our player must avoid
 var Enemy = function() {
     this.xRange = [-150, 600];
@@ -37,9 +38,6 @@ Enemy.prototype.getRandomSpeed = function() {
     return Math.floor(Math.random() * (maxSpeed - minSpeed)) + minSpeed;
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
 // Player initialization
 var Player = function() {
     this.xRange = [-2, 402];
@@ -63,12 +61,12 @@ Player.prototype.update = function() {
             // is the bug on the same row as the player?
             if (enemy.y == self.y) {
                 // is the bug on the player?
-                if (enemy.x >= player.x - 30 && enemy.x <= player.x + 30) {                   
+                if (enemy.x >= this.x - 30 && enemy.x <= this.x + 30) {                   
                     self.reset();
                     self.losePoint();
                 }
             }
-        });
+        }.bind(this));
     }
 };
 
@@ -106,22 +104,11 @@ Player.prototype.handleInput = function(key) {
     }
 };
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', function(e) {
-    var allowedKeys = {
-        37: 'left',
-        38: 'up',
-        39: 'right',
-        40: 'down'
-    };
+var player = new Player();
 
-    player.handleInput(allowedKeys[e.keyCode]);
-});
 
 var enemy1 = new Enemy();
 var enemy2 = new Enemy();
 var enemy3 = new Enemy();
 var allEnemies = [enemy1, enemy2, enemy3];
 
-var player = new Player();
